@@ -1,0 +1,24 @@
+{
+  "name": "ReactWeather",
+  "version": "1.0.0",
+  "description": "A weather app build with reactJs",
+  "main": "index.js",
+  "repository": "https://github.com/ankibalyan/ReactWeather.git",
+  "author": "Ankit Balyan",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.14.1",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.22.1",
+    "babel-loader": "^6.2.10",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-react": "^6.22.0"
+  },
+  "scripts": {
+    "build": "node_modules/.bin/webpack",
+    "test": "echo \"Error: no test specified\" && exit 1 "
+  }
+}
