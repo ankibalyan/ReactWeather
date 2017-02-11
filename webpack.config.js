@@ -13,7 +13,8 @@ module.exports = {
       "node_modules"
     ],
     alias: {
-      Components: path.resolve(__dirname, "src/components")
+      Components: path.resolve(__dirname, "src/components"),
+      Apis: path.resolve(__dirname, "src/api")
     }
   },
   module: {

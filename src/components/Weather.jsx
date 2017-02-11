@@ -1,5 +1,6 @@
 import React from 'react';
 import { WeatherForm, WeatherMessage } from 'Components';
+import { getTemp } from 'Apis';
 
 const Weather = React.createClass({
   getDefaultState: function () {
@@ -10,23 +11,43 @@ const Weather = React.createClass({
   },
   getInitialState: function () {
     return {
-      location: 'Miami',
-      temp: 88
+      isLoading: false
     };
   },
   getWeather: function (location) {
     this.setState({
-      location: location,
-      temp: 23
-    })
+      isLoading: true
+    });
+
+    getTemp(location).then(res => {
+      this.setState({
+        location: location,
+        temp: res,
+        isLoading: false
+      })
+    }, err => {
+      this.setState({
+        isLoading: false
+      });
+      
+      alert(err);
+      console.log(err);
+    });
   },
   render: function () {
-    const { location, temp } = this.state;
+    const { isLoading, location, temp } = this.state;
+    function renderMessage() {
+      if (isLoading) {
+        return <h3>fetching...</h3>
+      } else if (temp && location) {
+        return <WeatherMessage location={location} temp={temp} />
+      }
+    }
     return (
       <div>
         <h3>Get Weather</h3>
         <WeatherForm onSearch={this.getWeather} />
-        <WeatherMessage location={location} temp={temp} />
+        {renderMessage()}
       </div>
     );
   }
