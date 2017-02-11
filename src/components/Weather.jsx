@@ -1,9 +1,33 @@
 import React from 'react';
+import { WeatherForm, WeatherMessage } from 'Components';
 
 const Weather = React.createClass({
+  getDefaultState: function () {
+    return {
+      city: '',
+      message: ''
+    };
+  },
+  getInitialState: function () {
+    return {
+      city: '',
+      message: ''
+    };
+  },
+  getWeather: function (city) {
+    console.log(city);
+    this.setState({
+      city: city,
+      message: `${city} temperature is 24`
+    })
+  },
   render: function () {
     return (
-      <h3>Weather component</h3>
+      <div>
+        <h3>Get Weather</h3>
+        <WeatherForm onSubmit={this.getWeather} />
+        <WeatherMessage message={this.state.message} />
+      </div>
     );
   }
 });

@@ -8328,6 +8328,30 @@ Object.keys(_Examples).forEach(function (key) {
   });
 });
 
+var _WeatherForm = __webpack_require__(239);
+
+Object.keys(_WeatherForm).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _WeatherForm[key];
+    }
+  });
+});
+
+var _WeatherMessage = __webpack_require__(240);
+
+Object.keys(_WeatherMessage).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _WeatherMessage[key];
+    }
+  });
+});
+
 /***/ }),
 /* 72 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -26708,16 +26732,43 @@ var _react = __webpack_require__(6);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _Components = __webpack_require__(71);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Weather = _react2.default.createClass({
   displayName: 'Weather',
 
+  getDefaultState: function getDefaultState() {
+    return {
+      city: '',
+      message: ''
+    };
+  },
+  getInitialState: function getInitialState() {
+    return {
+      city: '',
+      message: ''
+    };
+  },
+  getWeather: function getWeather(city) {
+    console.log(city);
+    this.setState({
+      city: city,
+      message: city + ' temperature is 24'
+    });
+  },
   render: function render() {
     return _react2.default.createElement(
-      'h3',
+      'div',
       null,
-      'Weather component'
+      _react2.default.createElement(
+        'h3',
+        null,
+        'Get Weather'
+      ),
+      _react2.default.createElement(_Components.WeatherForm, { onSubmit: this.getWeather }),
+      _react2.default.createElement(_Components.WeatherMessage, { message: this.state.message })
     );
   }
 });
@@ -26787,6 +26838,88 @@ var Examples = _react2.default.createClass({
 });
 
 exports.Examples = Examples;
+
+/***/ }),
+/* 239 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.WeatherForm = undefined;
+
+var _react = __webpack_require__(6);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var WeatherForm = _react2.default.createClass({
+  displayName: "WeatherForm",
+
+  submitWeatherForm: function submitWeatherForm(e) {
+    e.preventDefault();
+
+    var cityName = this.refs.cityName.value;
+    if (cityName.length > 0) {
+      this.props.onSubmit(cityName);
+    }
+  },
+  render: function render() {
+    return _react2.default.createElement(
+      "form",
+      { onSubmit: this.submitWeatherForm },
+      _react2.default.createElement("input", { type: "text", ref: "cityName", placeholder: "Enter city name" }),
+      _react2.default.createElement(
+        "button",
+        null,
+        "Get Weather"
+      )
+    );
+  }
+});
+
+exports.WeatherForm = WeatherForm;
+
+/***/ }),
+/* 240 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.WeatherMessage = undefined;
+
+var _react = __webpack_require__(6);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var WeatherMessage = _react2.default.createClass({
+  displayName: 'WeatherMessage',
+
+  render: function render() {
+    var message = this.props.message;
+    return _react2.default.createElement(
+      'div',
+      null,
+      _react2.default.createElement(
+        'p',
+        null,
+        message
+      )
+    );
+  }
+});
+
+exports.WeatherMessage = WeatherMessage;
 
 /***/ })
 /******/ ]);
