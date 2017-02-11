@@ -26741,24 +26741,27 @@ var Weather = _react2.default.createClass({
 
   getDefaultState: function getDefaultState() {
     return {
-      city: '',
-      message: ''
+      location: '',
+      temp: ''
     };
   },
   getInitialState: function getInitialState() {
     return {
-      city: '',
-      message: ''
+      location: 'Miami',
+      temp: 88
     };
   },
-  getWeather: function getWeather(city) {
-    console.log(city);
+  getWeather: function getWeather(location) {
     this.setState({
-      city: city,
-      message: city + ' temperature is 24'
+      location: location,
+      temp: 23
     });
   },
   render: function render() {
+    var _state = this.state,
+        location = _state.location,
+        temp = _state.temp;
+
     return _react2.default.createElement(
       'div',
       null,
@@ -26767,8 +26770,8 @@ var Weather = _react2.default.createClass({
         null,
         'Get Weather'
       ),
-      _react2.default.createElement(_Components.WeatherForm, { onSubmit: this.getWeather }),
-      _react2.default.createElement(_Components.WeatherMessage, { message: this.state.message })
+      _react2.default.createElement(_Components.WeatherForm, { onSearch: this.getWeather }),
+      _react2.default.createElement(_Components.WeatherMessage, { location: location, temp: temp })
     );
   }
 });
@@ -26860,19 +26863,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var WeatherForm = _react2.default.createClass({
   displayName: "WeatherForm",
 
-  submitWeatherForm: function submitWeatherForm(e) {
+  onFormSubmit: function onFormSubmit(e) {
     e.preventDefault();
 
-    var cityName = this.refs.cityName.value;
-    if (cityName.length > 0) {
-      this.props.onSubmit(cityName);
+    var location = this.refs.location.value;
+    if (location.length > 0) {
+      this.props.onSearch(location);
     }
   },
   render: function render() {
     return _react2.default.createElement(
       "form",
-      { onSubmit: this.submitWeatherForm },
-      _react2.default.createElement("input", { type: "text", ref: "cityName", placeholder: "Enter city name" }),
+      { onSubmit: this.onFormSubmit },
+      _react2.default.createElement("input", { type: "text", ref: "location", placeholder: "Enter city name" }),
       _react2.default.createElement(
         "button",
         null,
@@ -26906,14 +26909,21 @@ var WeatherMessage = _react2.default.createClass({
   displayName: 'WeatherMessage',
 
   render: function render() {
-    var message = this.props.message;
+    var _props = this.props,
+        location = _props.location,
+        temp = _props.temp;
+
     return _react2.default.createElement(
       'div',
       null,
       _react2.default.createElement(
         'p',
         null,
-        message
+        'It is ',
+        temp,
+        ' in ',
+        location,
+        '.'
       )
     );
   }

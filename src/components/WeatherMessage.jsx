@@ -2,10 +2,10 @@ import React from 'react';
 
 const WeatherMessage = React.createClass({
   render: function () {
-    const message = this.props.message;
+    const { location, temp } = this.props;
     return (
       <div>
-        <p>{message}</p>
+        <p>It is {temp} in {location}.</p>
       </div>
     );
   }
