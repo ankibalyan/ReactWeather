@@ -3,12 +3,6 @@ import { WeatherForm, WeatherMessage } from 'Components';
 import { getTemp } from 'Apis';
 
 const Weather = React.createClass({
-  getDefaultState: function () {
-    return {
-      location: '',
-      temp: ''
-    };
-  },
   getInitialState: function () {
     return {
       isLoading: false
@@ -29,7 +23,7 @@ const Weather = React.createClass({
       this.setState({
         isLoading: false
       });
-      
+
       alert(err);
       console.log(err);
     });
