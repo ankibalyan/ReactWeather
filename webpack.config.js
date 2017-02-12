@@ -2,7 +2,27 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-  entry: "./src/index.jsx",
+  entry: [
+    'script-loader!jquery/dist/jquery.min.js',
+    'script-loader!foundation-sites/dist/js/foundation.min.js',
+    './src/index.jsx'
+  ],
+  externals: {
+    jquery: 'jQuery'
+  },
+  plugins: [
+    new webpack.DefinePlugin({ // <-- key to reducing React's size
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      }
+    }),
+    new webpack.ProvidePlugin({
+      '$': 'jquery',
+      'jQuery': 'jquery'
+    }),
+    new webpack.optimize.AggressiveMergingPlugin(), //Merge chunks
+    new webpack.optimize.UglifyJsPlugin() //minify everything
+  ],
   output: {
     filename: "bundle.js",
     path: path.resolve(__dirname, "public")
@@ -29,15 +49,6 @@ module.exports = {
         exclude: /(node_modules|bower_components)/
       }
     ]
-  },
-  plugins: [
-    new webpack.DefinePlugin({ // <-- key to reducing React's size
-      'process.env': {
-        'NODE_ENV': JSON.stringify('production')
-      }
-    }),
-    new webpack.optimize.AggressiveMergingPlugin(), //Merge chunks
-    new webpack.optimize.UglifyJsPlugin() //minify everything
-  ]
+  }
   // devtool: 'eval-source-map'
 }
