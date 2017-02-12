@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   entry: "./src/index.jsx",
@@ -29,5 +30,14 @@ module.exports = {
       }
     ]
   },
-  devtool: 'eval-source-map'
+  plugins: [
+    new webpack.DefinePlugin({ // <-- key to reducing React's size
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      }
+    }),
+    new webpack.optimize.AggressiveMergingPlugin(), //Merge chunks
+    new webpack.optimize.UglifyJsPlugin() //minify everything
+  ]
+  // devtool: 'eval-source-map'
 }
