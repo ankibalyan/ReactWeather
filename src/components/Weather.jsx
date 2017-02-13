@@ -11,7 +11,10 @@ const Weather = React.createClass({
   },
   getWeather: function (location) {
     this.setState({
-      isLoading: true
+      isLoading: true,
+      errorMessage: undefined,
+      location: undefined,
+      temp: undefined
     });
 
     getTemp(location).then(res => {
@@ -26,6 +29,20 @@ const Weather = React.createClass({
         errorMessage: err.message
       });
     });
+  },
+  componentDidMount: function () {
+    const location = this.props.location.query.location;
+    if (location && location.length > 0) {
+      this.getWeather(location);
+      window.location.hash = '#/';
+    }
+  },
+  componentWillReceiveProps: function (newProps) {
+    const location = newProps.location.query.location;
+    if (location && location.length > 0) {
+      this.getWeather(location);
+      window.location.hash = '#/';
+    }
   },
   render: function () {
     const { isLoading, location, temp, errorMessage } = this.state;
