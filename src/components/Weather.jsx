@@ -1,11 +1,12 @@
 import React from 'react';
-import { WeatherForm, WeatherMessage } from 'Components';
+import { WeatherForm, WeatherMessage, ErrorModal } from 'Components';
 import { getTemp } from 'Apis';
 
 const Weather = React.createClass({
   getInitialState: function () {
     return {
-      isLoading: false
+      isLoading: false,
+      errorMessage: undefined
     };
   },
   getWeather: function (location) {
@@ -21,15 +22,13 @@ const Weather = React.createClass({
       })
     }, err => {
       this.setState({
-        isLoading: false
+        isLoading: false,
+        errorMessage: err.message
       });
-
-      alert(err);
-      console.log(err);
     });
   },
   render: function () {
-    const { isLoading, location, temp } = this.state;
+    const { isLoading, location, temp, errorMessage } = this.state;
     function renderMessage() {
       if (isLoading) {
         return <h3 className="text-center">fetching...</h3>
@@ -37,11 +36,18 @@ const Weather = React.createClass({
         return <WeatherMessage location={location} temp={temp} />
       }
     }
+    function renderError() {
+      if (typeof errorMessage === 'string') {
+        return <ErrorModal message={errorMessage} />;
+      }
+      return null;
+    }
     return (
       <div>
         <h3 className="text-center">Get Weather</h3>
         <WeatherForm onSearch={this.getWeather} />
         {renderMessage()}
+        {renderError()}
       </div>
     );
   }

@@ -5,3 +5,4 @@ export * from './About';
 export * from './Examples';
 export * from './WeatherForm';
 export * from './WeatherMessage';
+export * from './common';
