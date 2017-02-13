@@ -3,7 +3,7 @@ import React from 'react';
 const About = () => {
   return (
     <div>
-      <h3 className="text-center">About</h3>
+      <h3 className="text-center page-title">About</h3>
       <p>Hi! This is a weather app built with reactJs</p>
       <p>Here are the some tools that I have used in this app</p>
       <ul>
